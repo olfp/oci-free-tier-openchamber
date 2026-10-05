@@ -1,0 +1,11 @@
+*.orig
+*.bak
+*.bak-openchamber
+.startup.env
+.openchamber-ui-password
+cookies.txt
+*.jar
+*.pem
+*.key
+id_rsa
+id_ed25519
