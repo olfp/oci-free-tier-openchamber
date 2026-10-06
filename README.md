@@ -8,6 +8,9 @@ Das hier ist die verdichtete Fassung eines Runbooks, das beim Aufbau einer
 solchen Instanz entstanden ist. Alle Adressen sind Platzhalter; die Befunde
 sind echt.
 
+> **English:** a full translation is available — see
+> [README.en.md](README.en.md) and [RUNBOOK.en.md](RUNBOOK.en.md).
+
 ```
 Internet ──443──> OCI Security List ──> VNIC (1:1-NAT) ──> Caddy
                                                               │
@@ -81,7 +84,8 @@ iptables -D INPUT -j REJECT --reject-with icmp-host-prohibited
 
 Das vollständige Runbook mit allen verifizierten Kommandos, den Rate-Limit-Werten,
 dem Auth-Scope-Mechanismus und einer Troubleshooting-Tabelle steht in
-[RUNBOOK.md](RUNBOOK.md).
+[RUNBOOK.md](RUNBOOK.md). Eine englische Fassung liegt unter
+[RUNBOOK.en.md](RUNBOOK.en.md).
 
 ## Zwei Warnungen
 
@@ -94,11 +98,22 @@ Authentifizierung** auf öffentlicher Adresse.
 Die Agent-Prozesse liegen im Cgroup des Service. Vor jedem Neustart offene
 Chats schließen.
 
+## Mobil / iOS
+
+Es gibt **keine** native iOS-App. Die Web-Version ist ausdrücklich für Mobil
+gebaut — als installierbare PWA (Service Worker,
+`apple-mobile-web-app-capable`, Hintergrund-Benachrichtigungen). Über Safari
+zu „Zum Home-Bildschirm" hinzufügen ergibt eine Vollbild-App. Hinweis: das
+Web-App-Manifest wird nicht ausgeliefert, was auf iOS normalerweise harmlos
+ist, den Installations-Dialog aber manchmal beeinflusst.
+
 ## Inhalt
 
 | Datei | |
 |---|---|
-| [RUNBOOK.md](RUNBOOK.md) | Betrieb, Passwort, Firewall, Auth-Scope, HTTPS, Troubleshooting |
+| [README.md](README.md) / [README.en.md](README.en.md) | Einstieg und Überblick (DE / EN) |
+| [RUNBOOK.md](RUNBOOK.md) | Betrieb, Passwort, Firewall, Auth-Scope, HTTPS, Troubleshooting (Deutsch) |
+| [RUNBOOK.en.md](RUNBOOK.en.md) | dasselbe auf Englisch |
 
 ## Lizenz
 

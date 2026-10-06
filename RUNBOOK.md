@@ -189,7 +189,7 @@ Passwort-TTL (empirisch gemessen):
 | normal | 43200 s = 12 Stunden |
 | `trustDevice: true` | 604800 s = 7 Tage |
 
-„Trustthis device" ist also nur ein laenger lebendes Cookie. Es gibt **keine**
+„Trust this device" ist also nur ein laenger lebendes Cookie. Es gibt **keine**
 serverseitige Geraete-Liste und keinen Logout-Endpoint — die Sessions sind
 stateless JWTs, die nur per `jwtVerify` gegen `jwt-secret` geprueft werden.
 
@@ -222,7 +222,7 @@ https://app.example.com {
 ```
 
 Zertifikat: Let's Encrypt, gueltig bis 2027-01-03, automatische Erneuerung
-(Let's_Enschluessel erneuert automatisch ~30 Tage vor Ablauf).
+(Caddy erneuert rund 30 Tage vor Ablauf).
 
 > **Das explizite `https://` ist Pflicht.** Mit blossem Hostnamen
 > (`app.example.com { ... }`) hat Caddy die Domain fuer Auto-HTTPS als ungeeignet
