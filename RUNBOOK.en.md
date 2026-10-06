@@ -344,10 +344,10 @@ NAT gateway port-forward rule is neither needed nor present.
 
 ---
 
-## 9. Final state (2026-10-05)
+## 9. Final state (2026-10-05/06)
 
-Everything verified, nothing outstanding apart from the optional hardening
-below.
+Verified, except for the optional hardening below and the gaps explicitly
+marked underneath.
 
 | Component | State |
 |---|---|
@@ -355,10 +355,34 @@ below.
 | Password login | `200` with the correct password, `401` with a wrong one |
 | Auth scope | `local` (external proxy, **no** OpenChamber tunnel) |
 | Passkey | registered, `rp.id = app.example.com` |
+| Passkey use | logged in from an **incognito window** — no password, no cookie |
 | Port 443 | open (security list + ufw) |
 | Port 3000 | **closed** (loopback only, Caddy backend) |
 | Port 22 | open, SSH fallback |
 | Reboot resilience | `openchamber.service` and `caddy` `enabled`, `Linger=yes` |
+
+### Mobile devices (2026-10-05/06)
+
+| Device | What was tested | Result |
+|---|---|---|
+| iPad, Safari | passkey login, chat, file editor, terminal | works |
+| iPhone | "Add to Home Screen" | works |
+| iPhone + iPad | **the same** passkey via iCloud Keychain | works |
+
+Home screen installation does not require a web app manifest — Safari uses
+the `apple-touch-icon` tags instead (180/167/152 px, all HTTP 200) together
+with the `apple-mobile-web-app-*` meta tags. See also the README section
+"Mobile".
+
+### Explicitly not verified
+
+So that section 9 does not read as "everything verified":
+
+- **Android and desktop** — there the install prompt relies on
+  `/manifest.json`, which is answered with 404 (no
+  `<link rel="manifest">` in the HTML).
+- **Background push notifications** end to end. The service worker registers
+  a `push` handler, but no subscription was created or tested over VAPID.
 
 ### What the operator must do in the OCI console
 

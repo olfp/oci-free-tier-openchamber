@@ -341,9 +341,10 @@ Deshalb wird eine Regel in der **Security List** wirksam und eine
 zusaetzliche NAT-Gateway-Port-Forward-Regel ist weder noetig noch vorhanden.
 ---
 
-## 9. Abschluss-Status (2026-10-05)
+## 9. Abschluss-Status (2026-10-05/06)
 
-Alles verifiziert, nichts offen ausser der optionalen Härtung unten.
+Verifiziert, bis auf die optionale Härtung und die unten klar markierten
+Lücken.
 
 | Komponente | Zustand |
 |---|---|
@@ -351,10 +352,34 @@ Alles verifiziert, nichts offen ausser der optionalen Härtung unten.
 | Passwort-Login | `200` bei korrektem, `401` bei falschem Passwort |
 | Auth-Scope | `local` (externer Proxy, **kein** OpenChamber-Tunnel) |
 | Passkey | registriert, `rp.id = app.example.com` |
+| Passkey-Nutzung | im **Incognito-Fenster** eingeloggt — ohne Passwort, ohne Cookie |
 | Port 443 | offen (Security List + ufw) |
 | Port 3000 | **geschlossen** (nur noch Loopback, Caddy-Backend) |
 | Port 22 | offen, SSH-Rückfallweg |
 | Reboot-Festigkeit | `openchamber.service` und `caddy` `enabled`, `Linger=yes` |
+
+### Mobilgeräte (2026-10-05/06)
+
+| Gerät | Prüfung | Ergebnis |
+|---|---|---|
+| iPad, Safari | Passkey-Login, Chat, Datei-Editor, Terminal | funktioniert |
+| iPhone | „Zum Home-Bildschirm" hinzufügen | funktioniert |
+| iPhone + iPad | **derselbe** Passkey über iCloud-Keychain | funktioniert |
+
+Die Home-Screen-Installation braucht kein Web-App-Manifest — Safari verwendet
+stattdessen `apple-touch-icon` (180/167/152 px, alle HTTP 200) und die
+`apple-mobile-web-app-*`-Meta-Tags. Siehe auch README, Abschnitt „Mobil / iOS".
+
+### Ausdrücklich nicht geprüft
+
+Damit Abschnitt 9 nicht wie „alles verifiziert" liest:
+
+- **Android und Desktop** — dort läuft der Installations-Dialog über
+  `/manifest.json`, das mit 404 beantwortet wird (kein
+  `<link rel="manifest">` im HTML).
+- **Hintergrund-Push-Benachrichtigungen** Ende-zu-Ende. Der Service Worker
+  registriert einen `push`-Handler, aber es wurde kein Abo über VAPID
+  angelegt und getestet.
 
 ### Was der Nutzer in der OCI-Console tun muss
 

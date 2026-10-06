@@ -101,11 +101,35 @@ Chats schließen.
 ## Mobil / iOS
 
 Es gibt **keine** native iOS-App. Die Web-Version ist ausdrücklich für Mobil
-gebaut — als installierbare PWA (Service Worker,
-`apple-mobile-web-app-capable`, Hintergrund-Benachrichtigungen). Über Safari
-zu „Zum Home-Bildschirm" hinzufügen ergibt eine Vollbild-App. Hinweis: das
-Web-App-Manifest wird nicht ausgeliefert, was auf iOS normalerweise harmlos
-ist, den Installations-Dialog aber manchmal beeinflusst.
+gebaut — als installierbare PWA mit Service Worker und
+`apple-mobile-web-app-capable`.
+
+**Geprüfter Stand (2026-10-05/06):**
+
+| Gerät | Prüfung | Ergebnis |
+|---|---|---|
+| iPad, Safari | Passkey-Login, Chat, Datei-Editor, Terminal | funktioniert |
+| iPhone | „Zum Home-Bildschirm" hinzufügen | funktioniert |
+| iPhone + iPad | **derselbe** Passkey über iCloud-Keychain | funktioniert |
+
+Dazu werden alle Icons ausgeliefert, die iOS braucht:
+
+```
+/apple-touch-icon-180x180.png  -> HTTP 200
+/apple-touch-icon-167x167.png  -> HTTP 200
+/apple-touch-icon-152x152.png  -> HTTP 200
+```
+
+Einzige dokumentierte Lücke: das Web-App-Manifest wird **nicht** ausgeliefert
+(`/manifest.json` → 404, kein `<link rel="manifest">` im HTML). Das betrifft
+**ausschließlich** den Installations-Dialog von Android-Chrome und der
+Desktop-Version. Für iOS ist es nicht nötig — Safari greift für die
+Home-Screen-Installation auf die `apple-touch-icon`-Tags und die
+`apple-mobile-web-app-*`-Meta-Tags zurück, beide sind vorhanden.
+
+Nicht geprüft: der Installations-Dialog auf Android/Desktop und
+Hintergrund-Push-Benachrichtigungen Ende-zu-Ende (der Service Worker
+registriert einen `push`-Handler, aber kein Abo wurde getestet).
 
 ## Inhalt
 

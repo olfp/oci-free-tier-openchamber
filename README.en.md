@@ -97,10 +97,34 @@ restart.
 ## Mobile
 
 There is no native iOS app. The web version is explicitly built for mobile as
-an installable PWA (service worker, `apple-mobile-web-app-capable`,
-background notifications). Add it to the home screen from Safari to get a
-full-screen experience. Note that the web app manifest is not served, which on
-iOS is usually harmless but can occasionally affect the install prompt.
+an installable PWA with a service worker and `apple-mobile-web-app-capable`.
+
+**Verified (2026-10-05/06):**
+
+| Device | What was tested | Result |
+|---|---|---|
+| iPad, Safari | passkey login, chat, file editor, terminal | works |
+| iPhone | "Add to Home Screen" | works |
+| iPhone + iPad | **the same** passkey via iCloud Keychain | works |
+
+All the icons iOS needs are served:
+
+```
+/apple-touch-icon-180x180.png  -> HTTP 200
+/apple-touch-icon-167x167.png  -> HTTP 200
+/apple-touch-icon-152x152.png  -> HTTP 200
+```
+
+The only documented gap: the web app manifest is **not** served
+(`/manifest.json` -> 404, no `<link rel="manifest">` in the HTML). This
+affects **exclusively** the install prompt of Android Chrome and the desktop
+version. iOS does not need it — Safari falls back to the `apple-touch-icon`
+tags and the `apple-mobile-web-app-*` meta tags for home screen installation,
+and both are present.
+
+Not verified: the Android/desktop install prompt, and end-to-end background
+push notifications (the service worker registers a `push` handler, but no
+subscription flow was tested).
 
 ## Contents
 
